@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 
 
 @Component({
@@ -26,16 +26,22 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
     `],
     template: `
         <header class="app-bar row middle-xs">
-            <span [routerLink]="['']" class="logo col-xs-10">
+            <span [routerLink]="['', 'admin']" class="logo col-xs-10">
                 D-Tester
             </span>
             <nav class="col-xs-2">
                 <div class="row middle-xs between-xs">
-                    <span [routerLink]="['', 'subject']" class="link">Subject</span>
-                    <span class="link">signout</span>
+                    <span [routerLink]="['', 'admin', 'subject']" class="link">Subject</span>
+                    <span (click)="signout()" class="link">signout</span>
                 </div>
             </nav>
         </header>
     `
 })
-export class AppBar {}
+export class AppBar {
+    constructor(private router: Router) {}
+
+    signout() {
+        this.router.navigate([''])
+    }
+}

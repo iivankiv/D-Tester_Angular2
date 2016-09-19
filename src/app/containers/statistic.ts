@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
@@ -11,5 +11,9 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
     `
 })
 
-export class Statistic {}
+export class Statistic implements OnDestroy{
+    ngOnDestroy() {
+        console.log('destroyed')
+    }
+}
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services';
 
 @Component ({
     selector: 'auth-container',
@@ -65,22 +66,25 @@ import { Router } from '@angular/router';
             <section class="main">
                 <section  class="login-pass-inputs-wrapper">
                     <h1 class="welcome-to-d-tester">Автоматизована система <br> тестування студентів</h1>
-                    <form>
+                    <form (submit)="authenticate()" #authForm="ngForm">
                         <input
                             type="text"
                             placeholder="Логін"
                             name="username"
+                            [(ngModel)]="user.username"
                             required
                         />
                         <input
                             type="password"
                             placeholder="Пароль"
                             name="password"
+                            [(ngModel)]="user.password"
                             required
                         />
                         <input
                             type="submit"
                             class="enter-submit"
+                            [disabled]="!authForm.form.valid"
                             value="Вхід"
                         />
                     </form><!-- form -->
@@ -89,4 +93,28 @@ import { Router } from '@angular/router';
         </div>
     `
 })
-export class Auth {}
+export class Auth {
+    path: string = '/login/index';
+    user = {
+        username: '',
+        password: ''
+    };
+    constructor(
+        private authService: AuthService,
+        private router: Router
+    ) {}
+
+    authenticate() {
+        this.authService.authenticate(this.path, this.user)
+            .do(res => console.log('from loginService authenticate', res))
+            .do((res) => this.checkForUser(res))
+    }
+
+    private checkForUser(res) {
+        if(res.response === 'ok' && res.roles[1] === 'admin') {
+            this.router.navigate(['', 'admin'])
+        } else if(res.response === 'ok' && res.roles[1] === 'student') {
+            this.router.navigate([''])
+        }
+    }
+}
