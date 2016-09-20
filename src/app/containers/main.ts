@@ -6,9 +6,9 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
     selector: 'main-container',
     directives: [ AppBar, ...ROUTER_DIRECTIVES ],
     template: `
-       <div>
+       <div class="container-fluid">
             <app-bar></app-bar>
-            <main class="main">
+            <main class="main container">
                 <router-outlet></router-outlet>
             </main>
         </div>

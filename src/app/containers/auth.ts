@@ -32,7 +32,7 @@ import { AuthService } from '../services';
 		width: 250px;
 		padding-left: 10px;
     }
-    input&:focus{
+    input:focus{
         box-shadow: 2px 2px 3px #fff, 1px 1px 2em #fff;
     }
     .enter-submit {
@@ -42,7 +42,7 @@ import { AuthService } from '../services';
 		margin-top: 20px;
 		border-radius: 20px;
 		height: 35px;
-		color: $white;
+		color: white;
 		background: rgba(0,0,0,0.6);
 		font-weight: bold;
 		border: none;
@@ -55,10 +55,10 @@ import { AuthService } from '../services';
         text-align: center;
         font-size: 40px;
         font-weight: bold;
-        color: $black;
+        color: black;
         margin-bottom: 50px;
-        text-shadow: 1px 1px 2px $white, 0 0 1em $white;
-        -moz-text-shadow: 1px 1px 2px $white, 0 0 1em $white;
+        text-shadow: 1px 1px 2px white, 0 0 1em white;
+        -moz-text-shadow: 1px 1px 2px white, 0 0 1em white;
     }
     `],
     template: `
@@ -99,15 +99,14 @@ export class Auth {
         username: '',
         password: ''
     };
-    constructor(
+    constructor (
         private authService: AuthService,
         private router: Router
     ) {}
 
     authenticate() {
         this.authService.authenticate(this.path, this.user)
-            .do(res => console.log('from loginService authenticate', res))
-            .do((res) => this.checkForUser(res))
+            .subscribe((res:any) => this.checkForUser(res))
     }
 
     private checkForUser(res:any) {
