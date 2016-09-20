@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 export class AuthService {
     constructor(private apiService: ApiService) {}
 
-    authenticate(path, creds) {
+    authenticate(path:string, creds:any) {
         return this.apiService.post(path, creds)
             .map(res => res.data);
     }

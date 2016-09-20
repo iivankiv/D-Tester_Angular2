@@ -110,7 +110,7 @@ export class Auth {
             .do((res) => this.checkForUser(res))
     }
 
-    private checkForUser(res) {
+    private checkForUser(res:any) {
         if(res.response === 'ok' && res.roles[1] === 'admin') {
             this.router.navigate(['', 'admin'])
         } else if(res.response === 'ok' && res.roles[1] === 'student') {

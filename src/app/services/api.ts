@@ -33,7 +33,7 @@ export class ApiService {
             .map(this.getJson)
     }
 
-    post(path: string, data): Observable<any> {
+    post(path: string, data:any): Observable<any> {
         return this.http.post(`${this.api_url}${path}`, data)
             .map(this.checkForError)
             .catch(err => Observable.throw(err))
