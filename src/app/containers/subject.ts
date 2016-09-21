@@ -82,7 +82,7 @@ import { ISubject } from "../interfaces";
 export class Subject {
     subjects: any = [];
 
-    path: string = 'subject/getRecords';
+    path: string = '/subject/getRecords';
 
     constructor(private subjectService: SubjectService) {
         this.subjectService.getSubjects(this.path)

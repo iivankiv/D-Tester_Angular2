@@ -9,7 +9,6 @@ export class SubjectService {
     getSubjects(path:string) {
         return this.apiService.get(path)
             .do(res => console.log(res))
-            .map(res => res.data)
     }
 }
 
