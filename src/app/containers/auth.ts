@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { FORM_DIRECTIVES } from '@angular/common;
 import { Router } from '@angular/router';
 import { AuthService } from '../services';
 
 @Component ({
     selector: 'auth-container',
+    directives: [FORM_DIRECTIVES],
     styles: [`
     .login-wrapper {
         background: url(img/enter-bg.jpg) no-repeat center center fixed;

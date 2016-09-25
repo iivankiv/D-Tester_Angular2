@@ -7,6 +7,6 @@ export class AuthService {
     constructor(private apiService: ApiService) {}
 
     authenticate(path:string, creds:any) {
-        return this.apiService.post(path, creds)
+        return this.apiService.postItem(path, creds)
     }
 }

@@ -7,8 +7,11 @@ export class SubjectService {
     constructor(private apiService: ApiService) {}
 
     getSubjects(path:string) {
-        return this.apiService.get(path)
-            .do(res => console.log(res))
+        return this.apiService.getItem(path)
+    }
+
+    deleteSubject(path: string, subject_id: any) {
+        return this.apiService.deleteItem(path, subject_id)
     }
 }
 

@@ -30,14 +30,14 @@ export class ApiService {
         }
     }
 
-    get(path: string): Observable<any> {
+    getItem(path: string): Observable<any> {
         return this.http.get(`${this.api_url}${path}`, {headers: this.headers})
             .map(this.checkForError)
             .catch(err => Observable.throw(err))
             .map(this.getJson)
     }
 
-    post(path: string, data:any): Observable<any> {
+    postItem(path: string, data:any): Observable<any> {
         return this.http.post(
             `${this.api_url}${path}`, JSON.stringify(data), {headers: this.headers})
             .map(this.checkForError)
@@ -46,8 +46,8 @@ export class ApiService {
             .map(this.getJson)
     }
 
-    delete(path: string): Observable<any> {
-        return this.http.delete(`${this.api_url}${path}`, {headers: this.headers})
+    deleteItem(path: string, id: any): Observable<any> {
+        return this.http.delete(`${this.api_url}${path}${id}`, {headers: this.headers})
             .map(this.checkForError)
             .catch(err => Observable.throw(err))
             .do((response) => console.log(response))

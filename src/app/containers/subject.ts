@@ -50,6 +50,7 @@ import { ISubject } from "../interfaces";
                                     <td>
                                         <button type="button"
                                                 class="btn btn-danger views-remove-btn pull-right table-help-btns"
+                                                (click)="deleteSubject(subject.subject_id)"
                                                 title="Видалити" >
                                                 <i class="glyphicon glyphicon-trash"></i>
                                         </button>
@@ -82,11 +83,22 @@ import { ISubject } from "../interfaces";
 export class Subject {
     subjects: any = [];
 
-    path: string = '/subject/getRecords';
+    getSubjectURL: string = '/subject/getRecords';
+    delSubjectURL: string = '/subject/del/';
 
     constructor(private subjectService: SubjectService) {
-        this.subjectService.getSubjects(this.path)
+        this.getSubject();
+    }
+
+    deleteSubject(id: any) {
+        this.subjectService.deleteSubject(this.delSubjectURL, id)
+            .subscribe( () => this.getSubject())
+    }
+
+    getSubject() {
+        this.subjectService.getSubjects(this.getSubjectURL)
             .subscribe((res: any) => this.subjects = res)
     }
+
 }
 
