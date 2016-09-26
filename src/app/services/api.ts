@@ -25,7 +25,7 @@ export class ApiService {
         } else {
             var error = new Error(response.statusText);
             error['response'] = response;
-            console.error(error);
+            console.error('Error from service', error);
             throw error;
         }
     }
@@ -42,7 +42,7 @@ export class ApiService {
             `${this.api_url}${path}`, JSON.stringify(data), {headers: this.headers})
             .map(this.checkForError)
             .catch(err => Observable.throw(err))
-            .do((response) => console.log(response))
+            .do((response) => console.log("postItem message", response))
             .map(this.getJson)
     }
 

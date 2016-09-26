@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common;
 import { Router } from '@angular/router';
 import { AuthService } from '../services';
 
 @Component ({
     selector: 'auth-container',
-    directives: [FORM_DIRECTIVES],
     styles: [`
     .login-wrapper {
         background: url(img/enter-bg.jpg) no-repeat center center fixed;
@@ -62,6 +60,10 @@ import { AuthService } from '../services';
         text-shadow: 1px 1px 2px white, 0 0 1em white;
         -moz-text-shadow: 1px 1px 2px white, 0 0 1em white;
     }
+    .invalid-data-message {
+        margin: 20px auto 0;
+        width: 250px;
+    }
     `],
     template: `
         <div class="login-wrapper">
@@ -83,6 +85,9 @@ import { AuthService } from '../services';
                             [(ngModel)]="user.password"
                             required
                         />
+                        <div class="invalid-data-message" *ngIf="invalidData">
+                            <p class="text-danger">Пароль або логін введено невірно</p>
+                         </div>
                         <input
                             type="submit"
                             class="enter-submit"
@@ -97,10 +102,9 @@ import { AuthService } from '../services';
 })
 export class Auth {
     path: string = '/login/index';
-    user = {
-        username: '',
-        password: ''
-    };
+    user = {username: '', password: ''};
+    invalidData: boolean = false;
+
     constructor (
         private authService: AuthService,
         private router: Router
@@ -108,7 +112,10 @@ export class Auth {
 
     authenticate() {
         this.authService.authenticate(this.path, this.user)
-            .subscribe((res:any) => this.checkForUser(res))
+                .subscribe(
+                    res => this.checkForUser(res),
+                    error => this.showErrorMessage(error)
+                )
     }
 
     private checkForUser(res:any) {
@@ -117,5 +124,9 @@ export class Auth {
         } else if(res.response === 'ok' && res.roles[1] === 'student') {
             this.router.navigate([''])
         }
+    }
+
+    private showErrorMessage(res:any) {
+        this.invalidData = true
     }
 }
