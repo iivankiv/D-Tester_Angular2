@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { AddSubjectModalWindow } from '../modal_windows';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { SubjectService } from "../services";
 import { ISubject } from "../interfaces";
 
 @Component({
     selector: 'subject-container',
-    directives: [ ...ROUTER_DIRECTIVES ],
+    directives: [  ...ROUTER_DIRECTIVES ],
     styles: [`
        .subject-header {
             background-color: deepskyblue;
@@ -32,7 +34,11 @@ import { ISubject } from "../interfaces";
                     <div class="col-xs-12 col-md-12">
                         <div class='col-sm-4 col-xs-12 subject-header'><h4>Предмети</h4></div>
                         <div class='col-sm-8 col-xs-12 subject-header'>
-                            <button type="button" class="btn btn-success add-btn pull-right" title="Додати предмет">
+                            <button
+                                type="button"
+                                class="btn btn-success add-btn pull-right"
+                                title="Додати предмет"
+                                (click)="addSubject()">
                                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -82,11 +88,17 @@ import { ISubject } from "../interfaces";
 
 export class Subject {
     subjects: any = [];
+    subject:any = {};
 
     getSubjectURL: string = '/subject/getRecords';
     delSubjectURL: string = '/subject/del/';
+    addSubjectURL: string = '/subject/insert';
 
-    constructor(private subjectService: SubjectService) {
+    constructor(
+        private subjectService: SubjectService,
+        vcRef: ViewContainerRef,
+        public modal: Modal
+    ) {
         this.getSubject();
     }
 
@@ -98,6 +110,14 @@ export class Subject {
     getSubject() {
         this.subjectService.getSubjects(this.getSubjectURL)
             .subscribe((res: any) => this.subjects = res)
+    }
+
+    addSubject() {
+        this.modal.open(AddSubjectModalWindow)
+            .subcribe(() => {
+                this.subjectService.addSubject(this.addSubjectURL, this.subject)
+                    .subscribe((res:any) => this.getSubject())
+            })
     }
 
 }

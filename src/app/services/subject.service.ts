@@ -13,5 +13,9 @@ export class SubjectService {
     deleteSubject(path: string, subject_id: any) {
         return this.apiService.deleteItem(path, subject_id)
     }
+
+    addSubject(path:string, subject) {
+        return this.apiService.postItem(path, subject)
+    }
 }
 
